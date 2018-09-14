@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * common functions
  *
@@ -147,7 +146,6 @@ if (!function_exists('to_underscore')) {
     }
 }
 
-
 if (!function_exists('array_insert')) {
     /**
      * @param array $array
@@ -187,7 +185,6 @@ if (!function_exists('array_to_select')) {
     }
 }
 
-
 if (!function_exists('array_no_repeat_merge'))
 {
     /**
@@ -207,7 +204,6 @@ if (!function_exists('array_no_repeat_merge'))
         return $result;
     }
 }
-
 
 if (!function_exists('in_multi_array'))
 {
@@ -237,3 +233,22 @@ if (!function_exists('in_multi_array'))
         return $result;
     }
 }
+
+if (!function_exists('format_price'))
+{
+    /**
+     * format price
+     * @param $array
+     * @return array
+     *
+     */
+    function format_price($price) {
+        $result = '0.00';
+        if( empty($price) ){
+            return $result;
+        }
+        $result = number_format($price, 2);
+        return $result;
+    }
+}
+
