@@ -13,16 +13,12 @@ if (!function_exists('p')) {
     function p($var)
     {
         $pre = '<pre style="position:relative;z-index:1000;padding:10px;border-radius:5px;background:#f5f5f5;border:1px solid #aaa;font-size:14px;line-height:18px;opacity:0.9;">';
-        if (is_bool($var)) {
-            var_dump($var);
-        } elseif (is_null($var)) {
+        if (is_null($var)) {
             var_dump(NULL);
-        } elseif (is_object($var)){
+        }  else {
             echo $pre;
             var_dump($var);
             echo '</pre>';
-        } else {
-            echo $pre. print_r($var, true) . '</pre>';
         }
     }
 }
