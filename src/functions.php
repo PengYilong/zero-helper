@@ -44,63 +44,6 @@ if (!function_exists('msg')) {
     }
 }
 
-if (!function_exists('search_condition')) {
-    /**
-     * search condition
-     * @param array $data
-     * @param array $subject $_GET $_POST
-     * @return array
-     */
-    function search_condition($data = [], $subject = [], $first = true)
-    {
-        $result = [];
-        if (empty($data)) {
-            return $result;
-        }
-        //statement
-        $conds = [
-            'equal',
-            'like',
-            'startDate',
-            'date',
-        ];
-
-        $cond = '';
-        $searchArray = [];
-
-        foreach ($conds as $key => $value) {
-            if (array_key_exists($value, $data)) {
-                foreach ($data[$value] as $k => $v) {
-                    if (!empty($subject[$k])) {
-                        $link = !$first ? ' AND ' : '';
-                        switch ($value) {
-                            case 'equal':
-                                $cond .= $link . $v . '=' . $subject[$k];
-                                $searchArray[$k] = $subject[$k];
-                                break;
-                            case 'like':
-                                $cond .= $link . $k . ' like \'%' . $subject[$k] . '%\'';
-                                $searchArray[$k] = $subject[$k];
-                                break;
-                            case 'date':
-                                $cond .= $link . $v['value'] . $v['symbol'] . strtotime($subject[$k]);
-                                $searchArray[$k] = $subject[$k];
-                                break;
-                        }
-                        $first = false;
-                    }
-                }
-            }
-        }
-
-        //return
-        $result['cond'] = $cond;
-        $result['searchArray'] = $searchArray;
-
-        return $result;
-    }
-}
-
 if (!function_exists('new_addslashes')) {
     /**
      * return to be handle  each elements of array  via  addslashes function
@@ -150,10 +93,10 @@ if (!function_exists('to_underscore')) {
 if (!function_exists('array_insert')) {
     /**
      * @param array $array
-     * @param int $position position of to insert array
-     * @param to insert array
+     * @param int   $position position of to insert array, start position is 1
+     * @param to    insert array
      */
-    function array_insert($array, $position, $insert_array)
+    function array_insert(array $array, int $position, array $insert_array)
     {
         $first_array = array_splice($array, 0, $position);
         return array_merge($first_array, $insert_array, $array);
@@ -253,3 +196,22 @@ if (!function_exists('format_price'))
     }
 }
 
+if (!function_exists('copy_dir')){
+    function copy_dir($src, $dst) {  
+        $dir = opendir($src);
+        if( !is_dir($dst) ){
+            mkdir($dst);
+        }
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                if ( is_dir($src . '/' . $file) ) {
+                    copy_dir($src . '/' . $file,$dst . '/' . $file);
+                    continue;
+                } else {
+                    copy($src . '/' . $file,$dst . '/' . $file);
+                }
+            }
+        }
+        closedir($dir);
+    }
+}
