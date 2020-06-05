@@ -10,16 +10,20 @@ if (!function_exists('p')) {
      * print_r instead
      *
      */
-    function p($var)
+    function p($var, $echo = true)
     {
         $pre = '<pre style="position:relative;z-index:1000;padding:10px;border-radius:5px;background:#f5f5f5;border:1px solid #aaa;font-size:14px;line-height:18px;opacity:0.9;">';
-        if (is_null($var)) {
-            var_dump(NULL);
-        }  else {
-            echo $pre;
-            var_dump($var);
-            echo '</pre>';
+        ob_start();
+        var_dump($var);
+
+        $output = ob_get_clean();
+        $output = htmlspecialchars($output);
+        $output = $pre . $output . '</pre>';
+        if ($echo) {
+            echo($output);
+            return;
         }
+        return $output;
     }
 }
 
