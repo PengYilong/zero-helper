@@ -3,11 +3,11 @@
   "description": "function library",
   "homepage": "https://github.com/PengYilong/zero-helper",
   "require": {
-    "php": ">=7.1.0"
+    "php": ">=7.0"
   },
   "authors": [
     {
-      "name": "Yilong Peng",
+      "name": "John Peng",
       "email": "948800401@qq.com",
       "role": "Developer"
     }
